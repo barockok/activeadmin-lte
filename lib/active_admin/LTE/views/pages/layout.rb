@@ -2,7 +2,7 @@ module ActiveAdmin
   module LTE
     module Views
       module Pages
-        class Layout < ActiveAdmin::Views::Pages::Layout
+        class Layout < Base
 
           def title
             'Amin LTE'

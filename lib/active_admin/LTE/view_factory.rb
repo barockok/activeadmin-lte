@@ -5,7 +5,7 @@ module ActiveAdmin
     class ViewFactory < AbstractViewFactory
 
       register  global_navigation:   ActiveAdmin::LTE::Views::TabbedNavigation,
-                utility_navigation:  ActiveAdmin::LTE::Views::TabbedNavigation,
+                utility_navigation:  ActiveAdmin::LTE::Views::UtilityNavigation,
                 site_title:          ActiveAdmin::LTE::Views::SiteTitle,
                 action_items:        ActiveAdmin::LTE::Views::ActionItems,
                 title_bar:           ActiveAdmin::LTE::Views::TitleBar,

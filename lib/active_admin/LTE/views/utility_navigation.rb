@@ -1,15 +1,7 @@
 module ActiveAdmin
   module LTE
     module Views
-
-      # Renders an ActiveAdmin::Menu as a set of unordered list items.
-      #
-      # This component takes cares of deciding which items should be
-      # displayed given the current context and renders them appropriately.
-      #
-      # The entire component is rendered within one ul element.
-      class TabbedNavigation < Component
-
+      class UtilityNavigation < Component
         attr_reader :menu
 
         # Build a new tabbed navigation component.
@@ -42,7 +34,7 @@ module ActiveAdmin
 
         def build_menu_item(item)
           li id: item.id do |li|
-            li.add_class "active" if item.current? assigns[:current_tab]
+            li.add_class "current" if item.current? assigns[:current_tab]
 
             text_node link_to item.label(self), item.url(self), item.html_options
 
@@ -56,7 +48,7 @@ module ActiveAdmin
         end
 
         def default_options
-          { id: "tabs", class: "sidebar-menu" }
+          { id: "tabs", class: "nav navbar-nav" }
         end
       end
     end
