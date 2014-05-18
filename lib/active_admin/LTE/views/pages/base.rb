@@ -99,13 +99,34 @@ module ActiveAdmin
           end
 
           def build_flash_messages
+            flash_type_map = {
+              alert: 'warning',
+              notice: 'success'
+            }
             if active_admin_flash_messages.any?
-              div class: 'flashes' do
+              div class: 'flashes pad margin no-print' do
                 active_admin_flash_messages.each do |type, message|
-                  div message, class: "flash flash_#{type}"
+                  flash_type = flash_type_map[type]
+                  div class: "flash flash_#{type} alert alert-#{flash_type}" do
+                    build_flash_icon flash_type
+                    text_node message
+                  end
                 end
               end
             end
+          end
+
+          def build_flash_icon flash_type
+            icon_class_map ={
+              'success'=> 'fa fa-check',
+              'warning'=> 'fa fa-warning',
+            }
+
+            raw = <<-END.strip_heredoc
+              <i class="#{icon_class_map[flash_type]}"></i>
+            END
+
+            text_node raw.html_safe
           end
 
           def build_main_content_wrapper

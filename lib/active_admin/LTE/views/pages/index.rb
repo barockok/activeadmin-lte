@@ -22,9 +22,15 @@ module ActiveAdmin
           # Render's the index configuration that was set in the
           # controller. Defaults to rendering the ActiveAdmin::Pages::Index::Table
           def main_content
-            wrap_with_batch_action_form do
-              build_table_tools
-              build_collection
+            div class: 'box' do
+              wrap_with_batch_action_form do
+                div class: 'box-header' do
+                  build_table_tools
+                end
+                div class: 'box-body' do
+                  build_collection
+                end
+              end
             end
           end
 
@@ -105,7 +111,7 @@ module ActiveAdmin
           # page. To set this, use the :as option in the page_presenter block.
           def find_index_renderer_class(klass)
             klass.is_a?(Class) ? klass :
-              ::ActiveAdmin::Views.const_get("IndexAs" + klass.to_s.camelcase)
+              ::ActiveAdmin::LTE::Views.const_get("IndexAs" + klass.to_s.camelcase)
           end
 
           def render_blank_slate

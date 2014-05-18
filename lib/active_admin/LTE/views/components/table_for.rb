@@ -16,6 +16,8 @@ module ActiveAdmin
           @row_class      = options.delete(:row_class)
 
           build_table
+          options[:class] ||= ''
+          options[:class] += ' table table-bordered'
           super(options)
         end
 

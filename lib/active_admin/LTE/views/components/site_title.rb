@@ -27,6 +27,14 @@ module ActiveAdmin
 
         private
 
+        def site_title_link?
+          @namespace.site_title_link.present?
+        end
+
+        def site_title_image?
+          @namespace.site_title_image.present?
+        end
+
         def title_text
           helpers.render_or_call_method_or_proc_on(self, @namespace.site_title)
         end

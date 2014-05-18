@@ -8,6 +8,7 @@ module ActiveAdmin
   end
 end
 
+require "active_admin/LTE/injectors/resource"
 require "active_admin/LTE/application"
 require "active_admin/LTE/controller_mixin"
 require "active_admin/LTE/railtie"

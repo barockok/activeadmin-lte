@@ -7,7 +7,7 @@ module ActiveAdmin
           table_options = {
             id: "index_table_#{active_admin_config.resource_name.plural}",
             sortable: true,
-            class: "index_table index",
+            class: "index_table index table",
             i18n: active_admin_config.resource_class,
             paginator: page_presenter[:paginator] != false,
             row_class: page_presenter[:row_class]
@@ -42,7 +42,7 @@ module ActiveAdmin
         # Extend the default ActiveAdmin::Views::TableFor with some
         # methods for quickly displaying items on the index page
         #
-        class IndexTableFor < ::ActiveAdmin::Views::TableFor
+        class IndexTableFor < ::ActiveAdmin::LTE::Views::TableFor
 
           # Display a column for checkbox
           def selectable_column
