@@ -69,8 +69,14 @@ module ActiveAdmin
           classes << col.html_class
 
           if sort_key
+            icon = 'fa '
+            icon << (current_sort[1] == 'desc' ?  'fa-caret-up' : 'fa-caret-down')
+            link_text = <<-END.strip_heredoc.html_safe
+              #{col.pretty_title}
+              <i class="#{icon}"></i>
+            END
             th class: classes do
-              link_to col.pretty_title, params: params, order: "#{sort_key}_#{order_for_sort_key(sort_key)}"
+              link_to link_text, params: params, order: "#{sort_key}_#{order_for_sort_key(sort_key)}"
             end
           else
             th col.pretty_title, class: classes
