@@ -128,18 +128,19 @@ module ActiveAdmin
           end
 
           def default_actions(resource)
-            links = ''.html_safe
+            links = '<div class="text-center"><div class="btn-group">'
             if controller.action_methods.include?('show') && authorized?(ActiveAdmin::Auth::READ, resource)
-              links << link_to(I18n.t('active_admin.view'), resource_path(resource), class: 'member_link view_link')
+              links << link_to(I18n.t('active_admin.view'), resource_path(resource), class: 'member_link view_link btn btn-xs btn-info')
             end
             if controller.action_methods.include?('edit') && authorized?(ActiveAdmin::Auth::UPDATE, resource)
-              links << link_to(I18n.t('active_admin.edit'), edit_resource_path(resource), class: 'member_link edit_link')
+              links << link_to(I18n.t('active_admin.edit'), edit_resource_path(resource), class: 'member_link edit_link btn btn-xs bg-orange')
             end
             if controller.action_methods.include?('destroy') && authorized?(ActiveAdmin::Auth::DESTROY, resource)
-              links << link_to(I18n.t('active_admin.delete'), resource_path(resource), class: 'member_link delete_link',
+              links << link_to(I18n.t('active_admin.delete'), resource_path(resource), class: 'member_link delete_link btn btn-xs btn-danger',
                 method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
             end
-            links
+            links << '</div></div>'
+            links.html_safe
           end
         end # IndexTableFor
       end # IndexAsTable
