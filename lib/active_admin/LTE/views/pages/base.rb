@@ -13,6 +13,22 @@ module ActiveAdmin
 
           private
 
+          def build_page_tools
+            div class: 'box', id: 'page-tool' do
+              div class: 'box-body' do
+                # div class: "table_tools pull-left" do
+                #   build_batch_actions_selector
+                #   build_scopes
+                #   build_index_list
+                # end if params[:action] == :index and any_table_tools?
+
+                div class: 'box-tools pull-right' do
+                  build_action_items
+                end
+              end
+            end
+          end
+
           def add_classes_to_body
             @body.add_class(params[:action])
             @body.add_class(params[:controller].gsub('/', '_'))
@@ -60,6 +76,11 @@ module ActiveAdmin
             end
           end
 
+          def build_action_items
+            action_items = action_items_for_action
+            insert_tag(view_factory.action_items, action_items  ) if action_items.any?
+          end
+
           def build_header
             insert_tag view_factory.header, active_admin_namespace, current_menu
           end
@@ -74,10 +95,13 @@ module ActiveAdmin
 
           def build_page_content
             section class: "content" do
-              build_flash_messages
-              div id: "active_admin_content", class: (skip_sidebar? ? "without_sidebar" : "with_sidebar") do
-                build_main_content_wrapper
-                build_sidebar unless skip_sidebar?
+              div class: 'row' do
+                div class: 'col-md-12' do
+                  # build_page_tools
+                  build_flash_messages
+                  build_main_content_wrapper
+                  build_sidebar unless skip_sidebar?
+                end
               end
             end
           end
@@ -130,11 +154,7 @@ module ActiveAdmin
           end
 
           def build_main_content_wrapper
-            div id: "main_content_wrapper" do
-              div id: "main_content" do
-                main_content
-              end
-            end
+            main_content
           end
 
           def main_content

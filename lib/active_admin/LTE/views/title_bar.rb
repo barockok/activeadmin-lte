@@ -17,14 +17,22 @@ module ActiveAdmin
         private
 
         def build_titlebar_left
+          build_breadcrumb
           build_title_tag
         end
 
         def build_titlebar_right
-          build_breadcrumb
-          # div id: "titlebar_right" do
-          #   build_action_items
-          # end
+          div class: 'action-items-block' do
+            build_action_items
+          end
+        end
+
+        def breadcrumb_root root_link
+          match = root_link.match(/\>(.*)\</)
+          text = match[1]
+          text_with_icon = "> <i class=\"fa fa-dashboard\"></i>  #{text} <"
+          raw_html = root_link.gsub />.*</, text_with_icon
+          raw_html.html_safe
         end
 
         def build_breadcrumb(separator = "/")
@@ -36,10 +44,16 @@ module ActiveAdmin
             breadcrumb_links
           end
           return unless links.present? && links.is_a?(::Array)
-          ol class: "breadcrumb" do
-            links.each do |link|
+          div class: 'breadcrumb-block' do
+            ol class: "breadcrumb" do
+              root = links.shift
               li do
-                text_node link
+                text_node breadcrumb_root(root)
+              end
+              links.each do |link|
+                li do
+                  text_node link
+                end
               end
             end
           end

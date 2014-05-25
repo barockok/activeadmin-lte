@@ -12,8 +12,12 @@ module ActiveAdmin
           end
         end
 
+        def text_for_default_action_item text, icon_class
+          text = <<-END.strip_heredoc.html_safe
+          <i class="#{icon_class}"></i> #{text}
+          END
+        end
       end
-
     end
   end
 end

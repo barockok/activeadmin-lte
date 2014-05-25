@@ -22,28 +22,23 @@ module ActiveAdmin
           # Render's the index configuration that was set in the
           # controller. Defaults to rendering the ActiveAdmin::Pages::Index::Table
           def main_content
-            div class: 'box' do
-              wrap_with_batch_action_form do
-                div class: 'box-header' do
-                  build_table_tools
-                end
-                div class: 'box-body' do
-                  build_collection
-                end
+            div class: 'box box-primary' do
+              div class: 'box-body table-responsive' do
+                build_collection
               end
             end
           end
 
           protected
 
-          def wrap_with_batch_action_form(&block)
-            if active_admin_config.batch_actions.any?
-              batch_action_form(&block)
-            else
-              block.call
-            end
-          end
-
+          # def wrap_with_batch_action_form(&block)
+          #   if active_admin_config.batch_actions.any?
+          #     batch_action_form(&block)
+          #   else
+          #     block.call
+          #   end
+          # end
+          #
           include ::ActiveAdmin::Helpers::Collection
 
           def items_in_collection?
@@ -64,13 +59,6 @@ module ActiveAdmin
 
           include ::ActiveAdmin::ViewHelpers::DownloadFormatLinksHelper
 
-          def build_table_tools
-            div class: "table_tools" do
-              build_batch_actions_selector
-              build_scopes
-              build_index_list
-            end if any_table_tools?
-          end
 
           def any_table_tools?
             active_admin_config.batch_actions.any? ||
