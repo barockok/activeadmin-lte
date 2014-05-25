@@ -12,7 +12,7 @@ module ActiveAdmin
 
       def setup!
         register_stylesheet 'admin-lte/base.css',       media: 'screen'
-        register_javascript 'active_admin.js'
+        register_javascript 'admin-lte/base.js'
       end
 
       module ClassMethods
