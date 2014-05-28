@@ -16,12 +16,6 @@ module ActiveAdmin
           def build_page_tools
             div class: 'box', id: 'page-tool' do
               div class: 'box-body' do
-                # div class: "table_tools pull-left" do
-                #   build_batch_actions_selector
-                #   build_scopes
-                #   build_index_list
-                # end if params[:action] == :index and any_table_tools?
-
                 div class: 'box-tools pull-right' do
                   build_action_items
                 end
@@ -110,7 +104,7 @@ module ActiveAdmin
             raw = <<-END.strip_heredoc
                   <div class="user-panel">
                       <div class="pull-left image">
-                          <img src="https://avatars2.githubusercontent.com/u/474500?s=460" class="img-circle" alt="User Image" />
+                          <img src="#{avatar_path}" class="img-circle" alt="#{avatar_alt}" />
                       </div>
                       <div class="pull-left info">
                           <p>Hello, Jane</p>
@@ -120,6 +114,15 @@ module ActiveAdmin
                   </div>
                   END
             text_node raw.html_safe
+          end
+
+          def avatar_path
+            avatar_file = "admin-lte/avatar#{(1..6).to_a.sample}.png"
+            image_path(avatar_file)
+          end
+
+          def avatar_alt
+            "some user"
           end
 
           def build_flash_messages
