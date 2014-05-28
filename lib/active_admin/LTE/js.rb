@@ -1,6 +1,6 @@
 module ActiveAdmin
   module LTE
-    module Js
+    module JS
       def registered_js
         @registered_js ||= []
       end
