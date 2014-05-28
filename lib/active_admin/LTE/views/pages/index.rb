@@ -81,7 +81,10 @@ module ActiveAdmin
             active = ( request.query_parameters[:q] ? 'active' : '')
             div class: "index-filter-outer #{active}" do
               div class: 'index-filter' do
-                h3 'Filter', class: 'no-margin'
+                h3 class: 'no-margin' do
+                  i class: 'fa fa-filter'
+                  text_node 'Filter'
+                end
                 text_node active_admin_filters_form_for assigns[:search], active_admin_config.filters
               end
             end

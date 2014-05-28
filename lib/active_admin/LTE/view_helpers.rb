@@ -3,7 +3,6 @@ module ActiveAdmin
     module ViewHelpers
       # Helper method to render a filter form
       def active_admin_filters_form_for(search, filters, options = {})
-        puts "ActiveAdminFilerFromFor- LTE"
         defaults = { builder: ActiveAdmin::Filters::FormBuilder,
                      url: collection_path,
                      html: {class: 'filter_form'} }
@@ -20,8 +19,8 @@ module ActiveAdmin
 
           clear_filter = url_for(params.except(:q, :page, :commit,:utf8))
           buttons = content_tag :div, class: "actions" do
-            f.submit(I18n.t('active_admin.filters.buttons.filter'), class: 'btn btn-info') +
-              link_to(I18n.t('active_admin.filters.buttons.clear'), clear_filter, class: 'clear_filters_btn btn btn-default') +
+            f.submit(I18n.t('active_admin.filters.buttons.filter'), class: 'btn btn-primary btn-flat') +
+              link_to(I18n.t('active_admin.filters.buttons.clear'), clear_filter, class: 'clear_filters_btn btn btn-flat btn-default') +
               hidden_field_tags_for(params, except: [:q, :page])
           end
 

@@ -121,6 +121,10 @@ module ActiveAdmin
             image_path(avatar_file)
           end
 
+          def avatar_name
+
+          end
+
           def avatar_alt
             "some user"
           end
@@ -131,7 +135,7 @@ module ActiveAdmin
               notice: 'success'
             }
             if active_admin_flash_messages.any?
-              div class: 'flashes pad margin no-print' do
+              div class: 'flashes no-print' do
                 active_admin_flash_messages.each do |type, message|
                   flash_type = flash_type_map[type]
                   div class: "flash flash_#{type} alert alert-#{flash_type}" do
@@ -150,7 +154,9 @@ module ActiveAdmin
             }
 
             raw = <<-END.strip_heredoc
+              <div class="alert-icon">
               <i class="#{icon_class_map[flash_type]}"></i>
+              </div>
             END
 
             text_node raw.html_safe
