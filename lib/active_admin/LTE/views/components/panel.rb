@@ -9,9 +9,12 @@ module ActiveAdmin
           icon_name = attributes.delete(:icon)
           icn = icon_name ? icon(icon_name) : "".html_safe
           super(attributes)
-          add_class "panel"
-          @title = h3(icn + title.to_s)
-          @contents = div(class: "panel_contents")
+          add_class "box"
+          remove_class "panel"
+          @title = div class: 'box-header' do
+            h3(icn + title.to_s, class: 'box-title')
+          end
+          @contents = div(class: "box-body no-padding")
         end
 
         def add_child(child)

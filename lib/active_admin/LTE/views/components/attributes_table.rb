@@ -11,7 +11,7 @@ module ActiveAdmin
           options = { }
           options[:for] = @collection.first if single_record?
           super(options)
-          @table = table
+          @table = table(class: 'table table-hover')
           build_colgroups
           rows(*attrs)
         end
@@ -23,7 +23,7 @@ module ActiveAdmin
         def row(*args, &block)
           title   = args[0]
           options = args.extract_options!
-          classes = [:row]
+          classes = []
           if options[:class]
             classes << options[:class]
           elsif title.present?

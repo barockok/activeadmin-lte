@@ -6,11 +6,11 @@ module ActiveAdmin
         builder_method :blank_slate
 
         def default_class_name
-          'blank_slate_container'
+          'blank_slate_container text-center'
         end
 
         def build(content)
-          super(span(content.html_safe, class: "blank_slate"))
+          super(h4(content.html_safe, class: "blank_slate"))
         end
 
       end

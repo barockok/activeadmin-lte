@@ -46,7 +46,6 @@ module ActiveAdmin
             raise(StandardError, "Collection is not a paginated scope. Set collection.page(params[:page]).per(10) before calling :paginated_collection.")
           end
 
-          @contents = div(class: "paginated_collection_contents")
           build_pagination_with_formats(options)
           @built = true
         end
@@ -63,16 +62,19 @@ module ActiveAdmin
         protected
 
         def build_pagination_with_formats(options)
-          div id: "index_footer" do
-            build_pagination
-            div(page_entries_info(options).html_safe, class: "pagination_information")
+          div id: "index_footer" , class: "row" do
+            div class: 'col-md-6 left-block' do
+              div(page_entries_info(options).html_safe, class: "pagination_information")
+              download_links = @download_links.is_a?(Proc) ? instance_exec(&@download_links) : @download_links
 
-            download_links = @download_links.is_a?(Proc) ? instance_exec(&@download_links) : @download_links
-
-            if download_links.is_a?(Array) && !download_links.empty?
-              build_download_format_links download_links
-            else
-              build_download_format_links unless download_links == false
+              if download_links.is_a?(Array) && !download_links.empty?
+                build_download_format_links download_links
+              else
+                build_download_format_links unless download_links == false
+              end
+            end
+            div class: 'col-md-6 right-block' do
+              build_pagination
             end
 
           end
@@ -81,7 +83,8 @@ module ActiveAdmin
         def build_pagination
           options = request.path_parameters
           options[:param_name] = @param_name if @param_name
-          options[:theme] = "active_admin"
+          options[:theme] = "twitter-bootstrap-3"
+          options[:pagination_class] = "pagination-sm"
 
           text_node paginate(collection, options.symbolize_keys)
         end
@@ -122,6 +125,13 @@ module ActiveAdmin
           end
         end
 
+        def build_download_format_links(formats = self.class.formats)
+          params = request.query_parameters.except :format, :commit
+          links = formats.map { |format| link_to format.to_s.upcase, {params: params, format: format}, class: 'btn btn-xs btn-default' }
+          div class: "download_links" do
+            text_node [I18n.t('active_admin.download'), links].flatten.join("&nbsp;").html_safe
+          end
+        end
       end
     end
   end

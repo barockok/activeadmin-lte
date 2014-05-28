@@ -17,7 +17,7 @@ module ActiveAdmin
 
           build_table
           options[:class] ||= ''
-          options[:class] += ' table table-bordered'
+          options[:class] += ' table table-hover'
           super(options)
         end
 

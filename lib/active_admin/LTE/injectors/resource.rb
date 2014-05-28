@@ -6,6 +6,7 @@ module ActiveAdmin
         def self.included(base)
           base.send :alias_method, :find_index_class, :new_find_index_class
           base.send :alias_method, :add_default_action_items, :new_add_default_action_items
+          base.send :alias_method, :add_filters_sidebar_section, :new_add_filters_sidebar_section
         end
 
         def new_add_default_action_items
@@ -41,8 +42,11 @@ module ActiveAdmin
           end
         end
 
+        def new_add_filters_sidebar_section
+          # don nothing
+        end
+
         def new_find_index_class(symbol_or_class)
-          puts "ActiveAdmin::PagePresenters injected"
           case symbol_or_class
           when Symbol
             ::ActiveAdmin::LTE::Views.const_get("IndexAs" + symbol_or_class.to_s.camelcase)
@@ -55,4 +59,3 @@ module ActiveAdmin
     end
   end
 end
-ActiveAdmin::Resource.send :include, ActiveAdmin::LTE::Injectors::Resource

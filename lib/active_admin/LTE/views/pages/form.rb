@@ -18,13 +18,24 @@ module ActiveAdmin
             if options[:partial]
               render options[:partial]
             else
-              active_admin_form_for resource, options do |f|
-                instance_exec f, &form_presenter.block
+              div class: 'row' do
+                div class: 'col-md-8' do
+                  active_admin_lte_form_for resource, options do |f|
+                    instance_exec f, &form_presenter.block
+                  end
+                end
               end
             end
           end
 
           private
+
+          def active_admin_lte_form_for resource, options = {}, &block
+            options = Marshal.load( Marshal.dump(options) )
+            options[:builder] ||= ActiveAdmin::LTE::FormBuilder
+
+            semantic_form_for resource, options, &block
+          end
 
           def default_form_options
             {
@@ -39,8 +50,31 @@ module ActiveAdmin
 
           def default_form_config
             ActiveAdmin::PagePresenter.new do |f|
-              f.inputs
-              f.actions
+              attributes = f.send(:default_columns_for_object)
+              # inputs = f.inputs do
+              #   attributes.each do |attribute|
+              #     attr_type = f.object.class.columns_hash[attribute.to_s].try(:type)
+              #     if attr_type && attr_type == :boolean
+              #       f.input attribute, as: :boolean, label_class: 'col-md-offset-3 col-md-9'
+              #     else
+              #       f.input attribute.to_sym, label_class: 'col-md-3', wrapper_class: 'col-md-9'
+              #     end
+              #   end
+              # end.to_str
+              inputs = f.inputs.to_str
+
+              content = content_tag :div, class: 'box-body' do
+                inputs.html_safe
+              end.html_safe
+
+              footer = content_tag :div, class: 'box-footer' do
+                f.submit(class: 'btn btn-primary').html_safe +
+                link_to("Cancel <i class='fa fa-times'></i>".html_safe, url_for(action: :index), class: 'btn btn-warning cancel-btn')
+              end.html_safe
+
+              content_tag :div, class: 'box' do
+                content + footer
+              end.html_safe
             end
           end
         end

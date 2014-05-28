@@ -584,29 +584,37 @@ $(window).load(function() {
     $.fn.tree = function() {
 
         return this.each(function() {
-            var btn = $(this).children("a").first();
+            var btn = $(this).children("i").first();
             var menu = $(this).children(".treeview-menu").first();
             var isActive = $(this).hasClass('active');
 
             //initialize already active menus
             if (isActive) {
                 menu.show();
-                btn.children(".fa-angle-left").first().removeClass("fa-angle-left").addClass("fa-angle-down");
+                btn.removeClass("fa-caret-left").addClass("fa-caret-down");
             }
             //Slide open or close the menu on link click
             btn.click(function(e) {
                 e.preventDefault();
                 if (isActive) {
                     //Slide up to close menu
-                    menu.slideUp();
+                    // menu.slideUp();
+                    var menuHeight = menu.height()
+                    menu.css({height: menuHeight, overflow: 'hidden', display: 'block'})
+                    menu.velocity({height: '0px'})
                     isActive = false;
-                    btn.children(".fa-angle-down").first().removeClass("fa-angle-down").addClass("fa-angle-left");
+                    btn.removeClass("fa-caret-down").addClass("fa-caret-left");
                     btn.parent("li").removeClass("active");
                 } else {
                     //Slide down to open menu
-                    menu.slideDown();
+                    menu
+                      .css({height: ''})
+                    var menuHeight = menu.height()
+                    console.log(menuHeight)
+                    menu.css({height: '0px',display: 'block', overflow: 'hidden'})
+                    menu.velocity({height: menuHeight+'px'})
                     isActive = true;
-                    btn.children(".fa-angle-left").first().removeClass("fa-angle-left").addClass("fa-angle-down");
+                    btn.removeClass("fa-caret-left").addClass("fa-caret-down");
                     btn.parent("li").addClass("active");
                 }
             });

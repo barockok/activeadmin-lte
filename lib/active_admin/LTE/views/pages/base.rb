@@ -154,7 +154,11 @@ module ActiveAdmin
           end
 
           def build_main_content_wrapper
-            main_content
+            div id: "main_content_wrapper" do
+              div id: "main_content" do
+                main_content
+              end
+            end
           end
 
           def main_content
@@ -174,6 +178,7 @@ module ActiveAdmin
           def sidebar_sections_for_action
             if active_admin_config && active_admin_config.sidebar_sections?
               active_admin_config.sidebar_sections_for(params[:action], self)
+                .select{|section| section.name != :filters}
             else
               []
             end
@@ -190,7 +195,8 @@ module ActiveAdmin
           # Renders the sidebar
           def build_sidebar
             div id: "sidebar" do
-              sidebar_sections_for_action.collect do |section|
+              sidebar_sections_for_action
+                .collect do |section|
                 sidebar_section(section)
               end
             end
@@ -203,6 +209,11 @@ module ActiveAdmin
           # Renders the content for the footer
           def build_footer
             insert_tag view_factory.footer
+            div style: 'display: none' do
+              active_admin_config.registered_js.each do |js|
+                text_node(javascript_include_tag('/'+js[:file]))
+              end
+            end
           end
 
         end

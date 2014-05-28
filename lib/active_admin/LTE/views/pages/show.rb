@@ -20,7 +20,11 @@ module ActiveAdmin
               # Eval the show config from the controller
               instance_exec resource, &config.block
             else
-              default_main_content
+              div class: 'row' do
+                div class: 'col-md-8' do
+                  default_main_content
+                end
+              end
             end
           end
 

@@ -2,7 +2,7 @@ module ActiveAdmin
   module LTE
     module Views
 
-      class SidebarSection < Panel
+      class SidebarSection < Arbre::Component
         builder_method :sidebar_section
 
         # Takes a ActiveAdmin::SidebarSection instance

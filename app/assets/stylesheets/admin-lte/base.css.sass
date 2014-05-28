@@ -12,8 +12,15 @@
  *= require admin-lte/font-awesome
  *= require admin-lte/ionicons
  *= require admin-lte/AdminLTE
+ *= require formtastic-bootstrap
  *= require_self
  */
+// # boootrap hack
+.boolean.input.form-group.checkbox
+  label
+    text-align: left
+.cancel-btn
+  margin-left: 15px
 
 table.index_table
   thead tr th
@@ -23,7 +30,7 @@ table.index_table
 .action-items-block
   float: right
   position: absolute
-  top: 25px
+  top: 20px
   right: 15px
 .breadcrumb-block
   margin-top: -10px
@@ -45,3 +52,150 @@ table.index_table
   -moz-border-radius: 2px
   border-radius: 2px
   padding-top: 2px
+
+.main-menu-dropdown-caret
+  position: absolute
+  top: 0px
+  padding-top: 15px
+  right: 15px
+  height: 100%
+  width: 30px
+  text-align: right
+  cursor: pointer
+  &:hover
+    color: #65A5FF
+li.has_nested
+  position: relative
+#index_footer
+  .left-block
+    padding-top: 10px
+  .right-block
+    text-align: right
+.table_tools_segmented_control, .batch_action_dropdown
+  display: inline-block
+  padding: 3px
+  border: 1px solid #ccc
+  margin-top: 10px
+  margin-left: 10px
+  border-radius: 3px
+.filter-toggle
+  margin-right: 10px
+  margin-top: 10px
+  display: inline-block
+  padding: 3px
+  border: 1px solid #ccc
+  border-radius: 3px
+.index-filter-outer
+  margin-top: 15px
+  overflow: hidden
+  border-bottom: 1px solid #ccc
+  position: relative
+  &:after
+    display: table
+    content: ''
+    clear: both
+    height: 1px
+    width: 100%
+    bottom: 0px
+    position: absolute
+    border-bottom: 1px solid #fff
+  .index-filter
+    display: none
+  &.active
+    .index-filter
+      display: block
+
+.index-filter
+  padding: 15px
+  background: #f4f4f4
+  border-top: 1px solid #eee
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+  .clear_filters_btn
+    margin-left: 10px
+
+
+.filter-wrapper
+  border-bottom: 1px solid #fff
+  margin-bottom: 10px
+  &:before, &:after
+    display: table
+    content: ''
+  &:after
+    clear: both
+    height: 1px
+    width: 100%
+    border-bottom: 1px solid #ccc
+  .filter_form_field
+    float: left
+    width: 33%
+    margin-bottom: 15px
+    &:before, &:after
+      display: table
+      content: ''
+    &:after
+      clear: both
+    label
+      padding: 0px
+      font-size: 13px
+      display: block
+      text-align: left
+      color: #222222
+      text-shadow: 0 1px 0 #fff
+    input[type="text"], select
+      color: #555
+      background-color: #fff
+      background-image: none
+      border: 1px solid #ccc
+      border-radius: 4px
+      height: 30px
+      font-size: 14px
+      line-height: 1.42857143
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+      -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+      transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+    input[type="text"]
+      text-indent: 10px
+    &.filter_select
+      select
+        width: 90%
+    &.filter_string, &.filter_numeric
+      select, input
+        display: inline-block
+      select
+        width: 32%
+        margin-right: 3%
+      input
+        width: 55%
+    &.filter_date_range
+      input
+        width: 40%
+        float: left
+        position: relative
+        &:before
+          width: 20px
+          top: 5px
+          left: 0px
+          height: 100%
+          content: "\f061"
+          font-family: FontAwesome
+          position: absolute
+      span
+        width: 10%
+        float: left
+        display: block
+        text-align: center
+        position: relative
+        text-color: transparent
+        &:after
+          width: 100%
+          top: 5px
+          left: 0px
+          height: 100%
+          content: "\f061"
+          font-family: FontAwesome
+          position: absolute
+
+
