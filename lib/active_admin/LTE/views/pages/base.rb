@@ -62,7 +62,7 @@ module ActiveAdmin
                   end
                 end
                 aside class: "right-side" do
-                  build_title_bar
+                  build_title_bar unless active_admin_config.title_bar == false
                   build_page_content
                 end
                 build_footer

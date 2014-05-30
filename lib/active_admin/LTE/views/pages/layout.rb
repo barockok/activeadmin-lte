@@ -5,7 +5,7 @@ module ActiveAdmin
         class Layout < Base
 
           def title
-            'Amin LTE'
+            assigns[:page_title] || I18n.t("active_admin.#{params[:action]}", default: params[:action].to_s.titleize)
           end
 
           def main_content

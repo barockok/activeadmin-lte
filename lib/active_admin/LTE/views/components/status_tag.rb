@@ -10,7 +10,7 @@ module ActiveAdmin
         end
 
         def default_class_name
-          'status_tag'
+          'status_tag label'
         end
 
         # @method status_tag(status, type = nil, options = {})
@@ -37,13 +37,14 @@ module ActiveAdmin
           type = args[1]
           label = options.delete(:label)
           classes = options.delete(:class)
+          original_status = status
           status = convert_to_boolean_status(status) 
 
           content = label || status.titleize if status
 
           super(content, options)
 
-          add_class(status_to_class(status)) if status
+          add_class(status_to_class(original_status)) if status
           add_class(type.to_s) if type
           add_class(classes) if classes
         end
@@ -61,7 +62,13 @@ module ActiveAdmin
         end
 
         def status_to_class(status)
-          status.titleize.gsub(/\s/, '').underscore
+          if status == 'true'
+            'label-success'
+          elsif ['false', nil].include?(status)
+            'label-default'
+          else
+            "label-info label-#{status}"
+          end
         end
       end
     end

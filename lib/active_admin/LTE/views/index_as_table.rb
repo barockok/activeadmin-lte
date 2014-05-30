@@ -128,7 +128,7 @@ module ActiveAdmin
           end
 
           def default_actions(resource)
-            links = '<div class="text-center"><div class="btn-group">'
+            links = '<div class="text-center table-action"><div class="btn-group">'
             if controller.action_methods.include?('show') && authorized?(ActiveAdmin::Auth::READ, resource)
               links << link_to(I18n.t('active_admin.view'), resource_path(resource), class: 'member_link view_link btn btn-xs btn-info')
             end
