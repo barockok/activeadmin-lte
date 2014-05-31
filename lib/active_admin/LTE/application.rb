@@ -2,7 +2,6 @@ module ActiveAdmin
   module LTE
     module Application
       def self.included(base)
-        puts "ActiveAdmin::Application injected"
         base.extend ClassMethods
         base.class_eval do
           remove_method :setup!

@@ -150,7 +150,6 @@ module ActiveAdmin
             paginator        = config[:paginator].nil?      ? true : config[:paginator]
             download_links   = config[:download_links].nil? ? active_admin_config.namespace.download_links : config[:download_links]
             pagination_total = config[:pagination_total].nil? ? true : config[:pagination_total]
-            puts config
             page_entries     = config[:page_entries].nil? ? true : config[:page_entries]
 
             paginated_collection(collection, entry_name:       active_admin_config.resource_label,
