@@ -24,8 +24,10 @@ module ActiveAdmin
           def main_content
             div class: 'box box-primary' do
               div class: 'box-header' do
-                build_batch_actions_selector if active_admin_config.batch_actions.any?
-                build_scopes if active_admin_config.scopes.any?
+                div class: 'box-header-inner' do
+                  build_batch_actions_selector if active_admin_config.batch_actions.any?
+                  build_scopes if active_admin_config.scopes.any?
+                end
                 filter_form_toggle if active_admin_config.filters.any?
               end
               div class: 'box-body table-responsive no-padding' do

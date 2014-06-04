@@ -29,6 +29,8 @@ table.index_table
   min-height: 67px
   position: relative
   z-index: 1
+.right-side > .content
+  min-height: 500px
 .action-items-block
   float: right
   position: absolute
@@ -87,11 +89,17 @@ li.has_nested
   padding: 3px
   border: 1px solid #ccc
   border-radius: 3px
+  position: absolute
+  top: 0px
+  right: 0px
 .index-filter-outer
   margin-top: 15px
   overflow: hidden
   border-bottom: 1px solid #ccc
   position: relative
+  width: 100%
+  &:before
+    clear: both
   &:after
     display: table
     content: ''
@@ -124,6 +132,7 @@ li.has_nested
 .filter-wrapper
   border-bottom: 1px solid #A3E2FF
   margin-bottom: 10px
+  text-align: left
   &:before, &:after
     display: table
     content: ''
@@ -133,8 +142,10 @@ li.has_nested
     width: 100%
     border-bottom: 1px solid #64BAE4
   .filter_form_field
-    float: left
+    display: inline-block
+    vertical-align: top
     width: 33%
+    text-align: left
     margin-bottom: 15px
     &:before, &:after
       display: table
@@ -222,4 +233,7 @@ li.has_nested
   min-width: 150px
 .active_admin.logged_out
   background: #222222 !important
-
+.box-header-inner
+  min-height: 50px
+#footer
+  text-align: center
