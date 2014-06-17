@@ -17,7 +17,7 @@ $(document).ready ->
     isActive = filterIndex.hasClass('active')
     height = filterIndex.height()
     console.log filterIndex.css('paddingTop')
-    unless isActive
+    if !isActive
       console.log height
       filterIndex
         .addClass('active')
@@ -30,7 +30,7 @@ $(document).ready ->
           height: '0px'
       filterIndex.velocity
           height: height, ->
-            filterIndex.removeAttr('style')
+            # filterIndex.removeAttr('style')
     else
       console.log height
       filterIndex

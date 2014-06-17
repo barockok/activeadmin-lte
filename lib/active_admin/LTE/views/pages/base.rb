@@ -131,13 +131,13 @@ module ActiveAdmin
 
           def build_flash_messages
             flash_type_map = {
-              alert: 'warning',
-              notice: 'success'
+              "alert" => 'warning',
+              "notice" =>'success'
             }
             if active_admin_flash_messages.any?
               div class: 'flashes no-print' do
                 active_admin_flash_messages.each do |type, message|
-                  flash_type = flash_type_map[type]
+                  flash_type = flash_type_map[type.to_s]
                   div class: "flash flash_#{type} alert alert-#{flash_type}" do
                     build_flash_icon flash_type
                     text_node message
@@ -149,6 +149,7 @@ module ActiveAdmin
 
           def build_flash_icon flash_type
             icon_class_map ={
+              'alert'  => 'fa fa-check',
               'success'=> 'fa fa-check',
               'warning'=> 'fa fa-warning',
             }
