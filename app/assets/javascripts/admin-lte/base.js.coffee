@@ -1,8 +1,8 @@
 #= require jquery
 #= require jquery_ujs
 #= require admin-lte/jquery.velocity.min
-#= require admin-lte/jquery.columnizer
 #= require admin-lte/bootstrap
+#= require admin-lte/bootstrap.wysiwyg
 #= require admin-lte/app
 #= require_self
 
