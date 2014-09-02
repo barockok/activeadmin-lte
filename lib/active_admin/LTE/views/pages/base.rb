@@ -107,9 +107,7 @@ module ActiveAdmin
                           <img src="#{avatar_path}" class="img-circle" alt="#{avatar_alt}" />
                       </div>
                       <div class="pull-left info">
-                          <p>Hello, Jane</p>
-
-                          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                          <p>Hello, <span class="avatar-name">#{avatar_name}</span></p>
                       </div>
                   </div>
                   END
@@ -122,7 +120,7 @@ module ActiveAdmin
           end
 
           def avatar_name
-
+           display_name current_active_admin_user
           end
 
           def avatar_alt

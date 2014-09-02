@@ -18,7 +18,7 @@ module ActiveAdmin
 end
 
 require "active_admin/LTE/application"
-require "active_admin/LTE/railtie"
+require "active_admin/LTE/engine"
 
 ActiveAdmin::ViewHelpers.send :include, ActiveAdmin::LTE::ViewHelpers
 ActiveAdmin::Resource.send    :include, ActiveAdmin::LTE::Resource
