@@ -3,10 +3,12 @@ module ActiveAdmin
   module LTE
     class FormBuilder < ::FormtasticBootstrap::FormBuilder
 
-      attr_reader :form_buffers
+      attr_reader :form_buffers, :actions_buffer
+      attr_accessor :use_form_dsl
 
       def initialize(*args)
         @form_buffers = ["".html_safe]
+        @actions_buffer = [''.html_safe]
         super
       end
 
@@ -18,29 +20,57 @@ module ActiveAdmin
       # If this `input` call is inside a `inputs` block, add the content
       # to the form buffer. Else, return it directly.
       def input(method, *args)
-        content = with_new_form_buffer{ super }
+        hash_options = args.shift || {}
+        hash_options.merge! label_class: 'col-sm-2', wrapper_class: 'col-sm-10'
+        args.unshift( hash_options )
+        content = with_new_form_buffer{ super(method, *args) }
         @use_form_buffer ? form_buffers.last << content : content
       end
 
       def cancel_link(url = {action: "index"}, html_options = {}, li_attrs = {})
-        li_attrs[:class] ||= "cancel"
-        li_content = template.link_to I18n.t('active_admin.cancel'), url, html_options
-        form_buffers.last << template.content_tag(:li, li_content, li_attrs)
+        html_options = html_options.merge(class: 'btn btn-warning cancel-btn')
+        template.link_to("Cancel <i class='fa fa-times'></i>".html_safe, url, html_options )
       end
 
       def actions(*args, &block)
-        form_buffers.last << with_new_form_buffer do
-          block_given? ? super : super{ commit_action_with_cancel_link }
+        unless use_form_dsl
+          form_buffers.last << with_new_form_buffer do
+            block_given? ? super : super{ commit_action_with_cancel_link }
+          end
+        else
+          @actions_buffer << with_new_form_buffer do
+            block_given? ? super : super{ commit_action_with_cancel_link }
+          end
+          form_buffers.last
         end
       end
 
+      def action_defined?
+        @actions_buffer.length > 1
+      end
+
       def action(*args)
-        form_buffers.last << with_new_form_buffer{ super }
+        unless use_form_dsl
+          form_buffers.last << with_new_form_buffer{ super }
+        else
+          @actions_buffer << with_new_form_buffer{ super }
+          form_buffers.last
+        end
       end
 
       def commit_action_with_cancel_link
-        action(:submit)
-        cancel_link
+        action_name   = (object.new_record? ? 'Create' : 'Update')
+        resource_name = object.class.name
+        <<-HTML.html_safe
+        <div class="row">
+          <div class="col-md-9">
+            <input class="btn btn-primary" id="post_submit_action" name="commit" type="submit" value="#{action_name} #{resource_name}">
+          </div>
+          <div class="col-md-3 text-right">
+            #{cancel_link.to_s.html_safe}
+          </div>
+        </div>
+        HTML
       end
 
       def has_many(assoc, options = {}, &block)
@@ -56,8 +86,12 @@ module ActiveAdmin
           contents = block.call has_many_form, index
 
           if has_many_form.object.new_record?
-            contents << template.content_tag(:li) do
-              template.link_to I18n.t('active_admin.has_many_remove'), "#", class: 'button has_many_remove'
+            contents << template.content_tag(:div, class: 'text-right') do
+              text = <<-HTML.html_safe
+              <i class="fa fa-times"></i>
+              #{I18n.t('active_admin.has_many_remove')}
+              HTML
+              template.link_to text , "#", class: 'btn btn-danger btn-xs button has_many_remove'
             end
           elsif builder_options[:allow_destroy]
             has_many_form.input :_destroy, as: :boolean, wrapper_html: {class: 'has_many_delete'},
@@ -115,6 +149,10 @@ module ActiveAdmin
 
       protected
 
+      def lte_input_class_name(as)
+        "ActiveAdmin::LTE::Inputs::#{as.to_s.camelize}Input"
+      end
+
       def active_admin_input_class_name(as)
         "ActiveAdmin::Inputs::#{as.to_s.camelize}Input"
       end
@@ -126,9 +164,13 @@ module ActiveAdmin
             custom_input_class_name(as).constantize
           rescue NameError
             begin
-              active_admin_input_class_name(as).constantize
+              lte_input_class_name(as).constantize
             rescue NameError
-              standard_input_class_name(as).constantize
+              begin
+                active_admin_input_class_name(as).constantize
+              rescue NameError
+                standard_input_class_name(as).constantize
+              end
             end
           end
         rescue NameError
@@ -177,8 +219,12 @@ module ActiveAdmin
         }
         html = with_new_form_buffer{ inputs_for_nested_attributes opts, &form_block }
         text = new_record.is_a?(String) ? new_record : I18n.t('active_admin.has_many_new', model: assoc_name.human)
+        text =<<-HTML.html_safe
+        <i class="fa fa-plus"></i>
+        #{text}
+        HTML
 
-        template.link_to text, '#', class: "button has_many_add", data: {
+        template.link_to text, '#', class: "btn btn-success btn-sm button has_many_add", data: {
           html: CGI.escapeHTML(html).html_safe, placeholder: placeholder
         }
       end

@@ -30,13 +30,6 @@ module ActiveAdmin
 
           private
 
-          def active_admin_lte_form_for resource, options = {}, &block
-            options = Marshal.load( Marshal.dump(options) )
-            options[:builder] ||= ActiveAdmin::LTE::FormBuilder
-
-            semantic_form_for resource, options, &block
-          end
-
           def default_form_options
             {
               url: default_form_path,
@@ -51,16 +44,6 @@ module ActiveAdmin
           def default_form_config
             ActiveAdmin::PagePresenter.new do |f|
               attributes = f.send(:default_columns_for_object)
-              # inputs = f.inputs do
-              #   attributes.each do |attribute|
-              #     attr_type = f.object.class.columns_hash[attribute.to_s].try(:type)
-              #     if attr_type && attr_type == :boolean
-              #       f.input attribute, as: :boolean, label_class: 'col-md-offset-3 col-md-9'
-              #     else
-              #       f.input attribute.to_sym, label_class: 'col-md-3', wrapper_class: 'col-md-9'
-              #     end
-              #   end
-              # end.to_str
               inputs = f.inputs.to_str
 
               content = content_tag :div, class: 'box-body' do

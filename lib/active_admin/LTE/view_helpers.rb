@@ -2,6 +2,16 @@ module ActiveAdmin
   module LTE
     module ViewHelpers
       # Helper method to render a filter form
+      def active_admin_lte_form_for resource, options = {}, &block
+        options = Marshal.load( Marshal.dump(options) )
+        options[:builder] ||= ActiveAdmin::LTE::FormBuilder
+        options[:html] ||= {}
+        options[:html][:class] ||= ''
+        options[:html][:class] += ' lte-resource-form form-horizontal'
+
+        semantic_form_for resource, options, &block
+      end
+
       def active_admin_filters_form_for(search, filters, options = {})
         defaults = { builder: ActiveAdmin::Filters::FormBuilder,
                      url: collection_path,

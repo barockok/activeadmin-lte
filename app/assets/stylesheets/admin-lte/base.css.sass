@@ -11,6 +11,9 @@
  *= require admin-lte/bootstrap.min
  *= require admin-lte/font-awesome
  *= require admin-lte/ionicons
+ *= require admin-lte/pickadate/classic
+ *= require admin-lte/pickadate/classic.date
+ *= require admin-lte/pickadate/classic.time
  *= require admin-lte/AdminLTE
  *= require formtastic-bootstrap
  *= require_self
@@ -245,4 +248,31 @@ li.has_nested
   overflow: hidden
   display: inline-block
 
+.has_many_container > h3
+  border-bottom: 1px solid #eee
+  padding-bottom: 10px
+  font-size: 18px
+.has_many_container > fieldset
+  padding: 20px
+  border-bottom: 1px solid #eee
+.has_many_container > .button.has_many_add
+  margin-top: 20px
+
+.filter_date_range
+  position: relative
+  .date-input-placeholder
+    position: absolute
+    width: 100%
+    top: 60px
+
+
+body.active_admin.logged_out.new
+  #content_wrapper > .flash
+    width: 350px
+    margin: 0px auto
+    padding: 10px
+    background-color: transparentize(#fff, .5)
+    margin-top: 30px
+    border-radius: 5px
+    color: #fff
 
